@@ -1,6 +1,9 @@
-# The Little Blimp
+Sky Ludwig
+##Final Project Proposal
 
-_italics represent optional pieces that will be implemented if time allows_
+#The Little Blimp
+
+*italics represent optional pieces that will be implemented if time allows*
 
 The little blimp is a sidecrolling flying shooter where you play as a little blimp. You are trying to fly your blimp home when a massive alien invasion comes out of nowhere and you must help defend the Earth from these UFO's.
 
@@ -9,7 +12,7 @@ To lose you just have to get shot down
 
 The player will use WASD or the arrow keys to move the ship across the screen. You will shoot with the left mouse button and have a special move with the right.
 
-Alien Enemys
+###Alien Enemys
 
 ------------------------
 
@@ -18,25 +21,25 @@ Alien Enemys
 	_* Ground unit that shots destroyable projectiles towards player_
 	* MotherShip large ship with _destroyable projectiles that track_ and small projectiles that shot diagonal and straight 
 	
-PowerUPs
+###PowerUPs
 
 ------------------------
 
-	* FireUP: makes player shoot projectiles at 2X speed
-	* BulkUP: makes player shot 2X as wide
-	* Health: Gives back one health point to player
-	_* GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there_
+	- FireUP: makes player shoot projectiles at 2X speed
+	- BulkUP: makes player shot 2X as wide
+	- Health: Gives back one health point to player
+	*- GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there*
 	
-	last 20 seconds
+	powerups last 20 seconds
 	
-HUD
+###HUD
 
 ------------------------
 
-	* Health bar
-	* Pause button
-	* Active PowerUP
-	_* progress bar_
+	- Health bar
+	- Pause button
+	- Active PowerUP
+	*- progress bar*
 	
 ability to pause the game
 obstacles such as buldings or windmills that the player can crash into

@@ -1,7 +1,7 @@
 Sky Ludwig
-##Final Project Proposal
+Final Project Proposal
 
-#The Little Blimp
+The Little Blimp
 
 **Bolds represent optional pieces that will be implemented if time allows**
 
@@ -12,34 +12,34 @@ To lose you just have to get shot down
 
 The player will use WASD or the arrow keys to move the ship across the screen. You will shoot with the left mouse button and have a special move with the right.
 
-###Alien Enemys
+Alien Enemys
 
 ------------------------
 
-	* UFOs that hover and shoot projectiles straight across the sceen
-	* small fast UFOs that dive bomb the player
-	- **Ground unit that shots destroyable projectiles towards player**
-	* MotherShip large ship with **destroyable projectiles that track** and small projectiles that shot diagonal and straight 
+* UFOs that hover and shoot projectiles straight across the sceen
+* small fast UFOs that dive bomb the player
+- **Ground unit that shots destroyable projectiles towards player**
+* MotherShip large ship with **destroyable projectiles that track** and small projectiles that shot diagonal and straight 
 	
-###PowerUPs
+PowerUPs
 
 ------------------------
 
-	- FireUP: makes player shoot projectiles at 2X speed
-	- BulkUP: makes player shot 2X as wide
-	- Health: Gives back one health point to player
-	- **GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there**
+- FireUP: makes player shoot projectiles at 2X speed
+- BulkUP: makes player shot 2X as wide
+- Health: Gives back one health point to player
+-__GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there__
 	
-	powerups last 20 seconds
+powerups last 20 seconds
 	
-###HUD
+HUD
 
 ------------------------
 
-	- Health bar
-	- Pause button
-	- Active PowerUP
-	- **progress bar**
+- Health bar
+- Pause button
+- Active PowerUP
+- **progress bar**
 	
 ability to pause the game
 obstacles such as buldings or windmills that the player can crash into

@@ -18,8 +18,8 @@ The player will use WASD or the arrow keys to move the ship across the screen. Y
 
 	* UFOs that hover and shoot projectiles straight across the sceen
 	* small fast UFOs that dive bomb the player
-	_* Ground unit that shots destroyable projectiles towards player_
-	* MotherShip large ship with _destroyable projectiles that track_ and small projectiles that shot diagonal and straight 
+	- *Ground unit that shots destroyable projectiles towards player*
+	* MotherShip large ship with *destroyable projectiles that track* and small projectiles that shot diagonal and straight 
 	
 ###PowerUPs
 
@@ -28,7 +28,7 @@ The player will use WASD or the arrow keys to move the ship across the screen. Y
 	- FireUP: makes player shoot projectiles at 2X speed
 	- BulkUP: makes player shot 2X as wide
 	- Health: Gives back one health point to player
-	*- GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there*
+	- *GunUP: makes player shoot 3 projectiles, one straight one at 45 degrees up and down from there*
 	
 	powerups last 20 seconds
 	
@@ -39,7 +39,7 @@ The player will use WASD or the arrow keys to move the ship across the screen. Y
 	- Health bar
 	- Pause button
 	- Active PowerUP
-	*- progress bar*
+	- *progress bar*
 	
 ability to pause the game
 obstacles such as buldings or windmills that the player can crash into

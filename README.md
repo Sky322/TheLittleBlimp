@@ -18,7 +18,7 @@ Alien Enemys
 
 * UFOs that hover and shoot projectiles straight across the sceen
 * small fast UFOs that dive bomb the player
-- **Ground unit that shots destroyable projectiles towards player**
+- **Ground unit that shots destroyable projectiles that track player**
 * MotherShip large ship with **destroyable projectiles that track** and small projectiles that shot diagonal and straight 
 	
 PowerUPs

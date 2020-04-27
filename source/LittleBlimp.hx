@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
+import Blast;
 
 class Blimp extends FlxSprite{
     public function new(x:Float = 0, y:Float = 0){

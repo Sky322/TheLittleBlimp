@@ -53,7 +53,15 @@ class PlayState extends FlxState
 	
 	override public function update(elapsed:Float)
 	{
+
+		FlxG.overlap(blimp, ufos, blimpDeath);
+
 		blimpShoot();
 		super.update(elapsed);
+	}
+
+	private function blimpDeath(blimp:Blimp, ufo:UFO) {
+		ufo.kill();
+		blimp.kill();
 	}
 }

@@ -1,30 +1,53 @@
 package;
 
+import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.group.FlxGroup;
+import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxState;
 import LittleBlimp;
 import UFO;
+import Ground;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState
 {
-	private static var UFO_COUNT(default, never) = 50;
-	private static var UFO_SPAWN_BORDER(default, never) = 2000;
+	private static var GROUND_COUNT(default, never) = 200;
+	private static var GROUND_START_X(default, never) = 0;
+	private static var GROUND_START_Y(default, never) = 350;
+
+	private static var WALL_COUNT(default, never) = 20;
+	private static var WALL_START_X(default, never) = 0;
+	private static var WALL_START_Y(default, never) = 350;
+
+	private static var ROOF_COUNT(default, never) = 200;
+	private static var ROOF_START_X(default, never) = 0;
+	private static var ROOF_START_Y(default, never) = -290;
+
+	private static var UFO_COUNT(default, never) = 100;
+	private static var UFO_SPAWN_BORDER(default, never) = 6400;
 	private var ufos:FlxTypedGroup<UFO>;
 
 	private var blimp:Blimp;
 	private var blast:Blast;
 	private var ufo:UFO;
+	private var grounds:FlxTypedGroup<Ground>;
+	private var walls:FlxTypedGroup<Ground>;
+	private var roofs:FlxTypedGroup<Ground>;
 
 	override public function create():Void
 	{
-		FlxG.camera.follow(blimp);
-		super.create();
 		blimp = new Blimp(20,20);
 		add(blimp);
+		FlxG.camera.follow(blimp, FlxCameraFollowStyle.PLATFORMER, 1);
+		bgColor = 0xFFE97512;
+
+		super.create();
 
 		createUFO();
+		initializeGround();
+		initializeWall();
+		initializeRoof();
 	}
 
 	private function createUFO() {
@@ -32,13 +55,47 @@ class PlayState extends FlxState
 
 		for (i in 0...UFO_COUNT) {
 			var x:Float = FlxG.random.int(UFO_SPAWN_BORDER, 
-				FlxG.width - UFO_SPAWN_BORDER);
-			var y:Float = FlxG.random.int(20, 
-				FlxG.height - 20);
+				FlxG.width - 100);
+			var y:Float = FlxG.random.int(-200, 
+				FlxG.height - 100);
 			var ufo = new UFO(x, y);
 			ufos.add(ufo);
 		}
 		add(ufos);
+	}
+
+	private function initializeGround() {
+		grounds = new FlxTypedGroup<Ground>();
+
+		for (i in 0...GROUND_COUNT) {
+			var x:Float = GROUND_START_X + (i * Ground.WIDTH);
+			var y:Float = GROUND_START_Y;
+			var ground:Ground = new Ground(x, y);
+			grounds.add(ground);
+		}
+		add(grounds);
+	}
+	private function initializeWall() {
+		walls = new FlxTypedGroup<Ground>();
+
+		for (i in 0...WALL_COUNT) {
+			var x:Float = WALL_START_X;
+			var y:Float = WALL_START_Y - (i * Ground.HEIGHT);
+			var wall:Ground = new Ground(x, y);
+			walls.add(wall);
+		}
+		add(walls);
+	}
+	private function initializeRoof() {
+		roofs = new FlxTypedGroup<Ground>();
+
+		for (i in 0...ROOF_COUNT) {
+			var x:Float = ROOF_START_X + (i * Ground.WIDTH);
+			var y:Float = ROOF_START_Y;
+			var roof:Ground = new Ground(x, y);
+			roofs.add(roof);
+		}
+		add(roofs);
 	}
 
 	function blimpShoot(){

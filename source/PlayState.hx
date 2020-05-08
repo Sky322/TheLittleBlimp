@@ -12,7 +12,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState
 {
-	private static var GROUND_COUNT(default, never) = 200;
+	private static var GROUND_COUNT(default, never) = 300;
 	private static var GROUND_START_X(default, never) = 0;
 	private static var GROUND_START_Y(default, never) = 350;
 
@@ -20,7 +20,7 @@ class PlayState extends FlxState
 	private static var WALL_START_X(default, never) = 0;
 	private static var WALL_START_Y(default, never) = 350;
 
-	private static var ROOF_COUNT(default, never) = 200;
+	private static var ROOF_COUNT(default, never) = 300;
 	private static var ROOF_START_X(default, never) = 0;
 	private static var ROOF_START_Y(default, never) = -290;
 
@@ -57,7 +57,7 @@ class PlayState extends FlxState
 			var x:Float = FlxG.random.int(UFO_SPAWN_BORDER, 
 				FlxG.width - 100);
 			var y:Float = FlxG.random.int(-200, 
-				FlxG.height - 100);
+				FlxG.height - 150);
 			var ufo = new UFO(x, y);
 			ufos.add(ufo);
 		}
@@ -112,6 +112,10 @@ class PlayState extends FlxState
 	{
 
 		FlxG.overlap(blimp, ufos, blimpDeath);
+
+		FlxG.collide(hero, walls);
+		FlxG.collide(hero, grounds);
+		FlxG.collide(hero, roofs);
 
 		blimpShoot();
 		super.update(elapsed);

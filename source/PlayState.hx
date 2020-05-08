@@ -46,8 +46,7 @@ class PlayState extends FlxState
 
 		createUFO();
 		initializeGround();
-		initializeWall();
-		initializeRoof();
+		add(grounds);
 	}
 
 	private function createUFO() {
@@ -68,34 +67,14 @@ class PlayState extends FlxState
 		grounds = new FlxTypedGroup<Ground>();
 
 		for (i in 0...GROUND_COUNT) {
-			var x:Float = GROUND_START_X + (i * Ground.WIDTH);
-			var y:Float = GROUND_START_Y;
-			var ground:Ground = new Ground(x, y);
-			grounds.add(ground);
+			grounds.add(new Ground(GROUND_START_X + i * Ground.WIDTH, GROUND_START_Y));
 		}
-		add(grounds);
-	}
-	private function initializeWall() {
-		walls = new FlxTypedGroup<Ground>();
-
 		for (i in 0...WALL_COUNT) {
-			var x:Float = WALL_START_X;
-			var y:Float = WALL_START_Y - (i * Ground.HEIGHT);
-			var wall:Ground = new Ground(x, y);
-			walls.add(wall);
+			grounds.add(new Ground(WALL_START_X, WALL_START_Y - i * Ground.HEIGHT));
 		}
-		add(walls);
-	}
-	private function initializeRoof() {
-		roofs = new FlxTypedGroup<Ground>();
-
 		for (i in 0...ROOF_COUNT) {
-			var x:Float = ROOF_START_X + (i * Ground.WIDTH);
-			var y:Float = ROOF_START_Y;
-			var roof:Ground = new Ground(x, y);
-			roofs.add(roof);
+			grounds.add(new Ground(ROOF_START_X + i * Ground.WIDTH, ROOF_START_Y));
 		}
-		add(roofs);
 	}
 
 	function blimpShoot(){
@@ -110,15 +89,13 @@ class PlayState extends FlxState
 	
 	override public function update(elapsed:Float)
 	{
+		super.update(elapsed);
 
 		FlxG.overlap(blimp, ufos, blimpDeath);
 
-		FlxG.collide(hero, walls);
-		FlxG.collide(hero, grounds);
-		FlxG.collide(hero, roofs);
+		FlxG.collide(blimp, grounds);
 
 		blimpShoot();
-		super.update(elapsed);
 	}
 
 	private function blimpDeath(blimp:Blimp, ufo:UFO) {

@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.group.FlxGroup;
-import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxState;
 import LittleBlimp;
@@ -12,6 +11,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState
 {
+	private static var BULKUP_COUNT(default, never) = 10;
+	private static var BULKUP_SPAWN_BORDER(default, never) = 6400;
+
 	private static var GROUND_COUNT(default, never) = 300;
 	private static var GROUND_START_X(default, never) = 0;
 	private static var GROUND_START_Y(default, never) = 350;
@@ -28,8 +30,11 @@ class PlayState extends FlxState
 	private static var UFO_SPAWN_BORDER(default, never) = 6400;
 	private var ufos:FlxTypedGroup<UFO>;
 
+	private var bulkUPs:FlxTypedGroup<BulkUP>;
+	private var fireUPs:FlxTypedGroup<FireUP>;
 	private var blimp:Blimp;
 	private var blast:Blast;
+	private var blast2:Blast;
 	private var ufo:UFO;
 	private var grounds:FlxTypedGroup<Ground>;
 	private var walls:FlxTypedGroup<Ground>;
@@ -37,7 +42,10 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-		blimp = new Blimp(20,20);
+		//only way I found I could get all my collisions to work
+		FlxG.worldBounds.set(0,0,0,0);
+
+		blimp = new Blimp(50,50);
 		add(blimp);
 		FlxG.camera.follow(blimp, FlxCameraFollowStyle.PLATFORMER, 1);
 		bgColor = 0xFFE97512;
@@ -45,6 +53,7 @@ class PlayState extends FlxState
 		super.create();
 
 		createUFO();
+		createPowerUPS();
 		initializeGround();
 		add(grounds);
 	}
@@ -62,6 +71,29 @@ class PlayState extends FlxState
 		}
 		add(ufos);
 	}
+	private function createPowerUPS() {
+		bulkUPs = new FlxTypedGroup<BulkUP>();
+		fireUPs = new FlxTypedGroup<FireUP>();
+
+		for (i in 0...BULKUP_COUNT) {
+			var x:Float = FlxG.random.int(BULKUP_SPAWN_BORDER, 
+				FlxG.width - 100);
+			var y:Float = FlxG.random.int(-200, 
+				FlxG.height - 150);
+			var bulkUP = new BulkUP(x, y);
+			bulkUPs.add(bulkUP);
+		}
+		for (i in 0...BULKUP_COUNT) {
+			var x:Float = FlxG.random.int(BULKUP_SPAWN_BORDER, 
+				FlxG.width - 100);
+			var y:Float = FlxG.random.int(-200, 
+				FlxG.height - 150);
+			var fireUP = new FireUP(x, y);
+			fireUPs.add(fireUP);
+		}
+		add(fireUPs);
+		add(bulkUPs);
+	}
 
 	private function initializeGround() {
 		grounds = new FlxTypedGroup<Ground>();
@@ -77,29 +109,56 @@ class PlayState extends FlxState
 		}
 	}
 
-	function blimpShoot(){
+	private function blimpShoot(){
 		blast = new Blast(blimp.x,blimp.y);
+		blast2 = new Blast(blimp.x, blimp.y+blimp.height);
 
         var shoot:Bool = false;
         shoot = FlxG.mouse.justPressed;
-        if (shoot){
-           add(blast);
-        }
-	}
-	
-	override public function update(elapsed:Float)
-	{
-		super.update(elapsed);
-
-		FlxG.overlap(blimp, ufos, blimpDeath);
-
-		FlxG.collide(blimp, grounds);
-
-		blimpShoot();
+        if (shoot && blimp.isFireUP){
+		   add(blast);
+		   add(blast2);
+		}
+		else if (shoot && !blimp.isFireUP) {
+			add(blast);
+		}
 	}
 
 	private function blimpDeath(blimp:Blimp, ufo:UFO) {
+		if (blimp.isBulkUP){
+			ufo.kill();
+			blimp.isBulkUP = false;
+		}
+		else{
+			ufo.kill();
+			blimp.kill();
+		}
+	}
+	private function ufoDeath(ufo:UFO, blast:Blast) {
 		ufo.kill();
-		blimp.kill();
+		blast.kill();
+	}
+	private function bulkUPCollide(blimp:Blimp, bulkUP:BulkUP){
+		bulkUP.kill();
+		blimp.isBulkUP = true;
+	}
+	private function fireUPCollide(blimp:Blimp, fireUP:FireUP){
+		fireUP.kill();
+		blimp.isFireUP = true;
+	}
+	
+	override public function update(elapsed:Float):Void
+	{
+		FlxG.collide(blimp, grounds);
+
+		FlxG.overlap(blimp, ufos, blimpDeath);
+		FlxG.overlap(ufos ,blast, ufoDeath);
+		FlxG.overlap(blimp, bulkUPs, bulkUPCollide);
+		FlxG.overlap(blimp, fireUPs, fireUPCollide);
+
+		blimpShoot();
+
+		super.update(elapsed);
+
 	}
 }

@@ -5,10 +5,24 @@ import flixel.FlxG;
 import flixel.util.FlxColor;
 
 class Blimp extends FlxSprite{
+
+    public var isBulkUP:Bool;
+    public var isFireUP:Bool;
+    private var time = 200;
+
     public function new(x:Float = 0, y:Float = 0){
         super(x,y);
         makeGraphic(15,15, FlxColor.BLUE);
         drag.x = drag.y = 1200;
+    }
+    function isFireUpTime(){
+        if (time>=0){
+            time--;
+        }
+        else{
+            isFireUP = false;
+        }
+
     }
 
     function movement(){
@@ -43,6 +57,9 @@ class Blimp extends FlxSprite{
     }
 
     override function update(elapsed:Float) {
+        if (isFireUP){
+            isFireUpTime();
+        }
         movement();
         super.update(elapsed);
     }

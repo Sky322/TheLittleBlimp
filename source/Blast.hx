@@ -4,12 +4,12 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 
 class Blast extends FlxSprite{
-    private var spd = 350;
+    private var spd = 300;
     private var life = 100;
 
     public function new(x:Float = 0, y:Float = 0){
         super(x,y);
-        makeGraphic(3,3);
+        makeGraphic(5,5);
     }
 
     function movement(){

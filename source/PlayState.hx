@@ -7,6 +7,7 @@ import flixel.FlxState;
 import LittleBlimp;
 import UFO;
 import Ground;
+import Home;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState
@@ -40,13 +41,18 @@ class PlayState extends FlxState
 	private var walls:FlxTypedGroup<Ground>;
 	private var roofs:FlxTypedGroup<Ground>;
 
+	private var home:Home;
+
 	override public function create():Void
 	{
 		//only way I found I could get all my collisions to work
 		FlxG.worldBounds.set(0,0,0,0);
 
-		blimp = new Blimp(50,50);
+		blimp = new Blimp(6250,50);
 		add(blimp);
+		home = new Home(6450,50);
+		add(home);
+
 		FlxG.camera.follow(blimp, FlxCameraFollowStyle.PLATFORMER, 1);
 		bgColor = 0xFFE97512;
 
@@ -146,6 +152,9 @@ class PlayState extends FlxState
 		fireUP.kill();
 		blimp.isFireUP = true;
 	}
+	private function winning(blimp:Blimp, home:Home){
+		FlxG.switchState(new GameWonState());
+	}
 	
 	override public function update(elapsed:Float):Void
 	{
@@ -155,6 +164,8 @@ class PlayState extends FlxState
 		FlxG.overlap(ufos ,blast, ufoDeath);
 		FlxG.overlap(blimp, bulkUPs, bulkUPCollide);
 		FlxG.overlap(blimp, fireUPs, fireUPCollide);
+
+		FlxG.overlap(blimp, home, winning);
 
 		blimpShoot();
 

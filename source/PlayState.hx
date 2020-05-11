@@ -12,10 +12,10 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState
 {
-	private static var BULKUP_COUNT(default, never) = 12;
-	private static var BULKUP_SPAWN_BORDER(default, never) = 7200;
+	private static var BULKUP_COUNT(default, never) = 10;
+	private static var BULKUP_SPAWN_BORDER(default, never) = 5000;
 
-	private static var GROUND_COUNT(default, never) = 250;
+	private static var GROUND_COUNT(default, never) = 2000;
 	private static var GROUND_START_X(default, never) = 0;
 	private static var GROUND_START_Y(default, never) = 350;
 
@@ -23,12 +23,12 @@ class PlayState extends FlxState
 	private static var WALL_START_X(default, never) = 0;
 	private static var WALL_START_Y(default, never) = 350;
 
-	private static var ROOF_COUNT(default, never) = 250;
+	private static var ROOF_COUNT(default, never) = 200;
 	private static var ROOF_START_X(default, never) = 0;
 	private static var ROOF_START_Y(default, never) = -290;
 
-	private static var UFO_COUNT(default, never) = 400;
-	private static var UFO_SPAWN_BORDER(default, never) = 11000;
+	private static var UFO_COUNT(default, never) = 200;
+	private static var UFO_SPAWN_BORDER(default, never) = 5000;
 	
 	private var ufos:FlxTypedGroup<UFO>;
 	private var bulkUPs:FlxTypedGroup<BulkUP>;
@@ -49,7 +49,7 @@ class PlayState extends FlxState
 
 		blimp = new Blimp(50,50);
 		add(blimp);
-		home = new Home(7300,50);
+		home = new Home(4700,50);
 		add(home);
 
 		FlxG.camera.follow(blimp, FlxCameraFollowStyle.PLATFORMER, 1);

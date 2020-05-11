@@ -29,18 +29,15 @@ class PlayState extends FlxState
 
 	private static var UFO_COUNT(default, never) = 400;
 	private static var UFO_SPAWN_BORDER(default, never) = 11000;
-
-	//private static var BLAST_COUNT(default, never) = 1000;
 	
 	private var ufos:FlxTypedGroup<UFO>;
 	private var bulkUPs:FlxTypedGroup<BulkUP>;
-	//private var fireUPs:FlxTypedGroup<FireUP>;
+	private var fireUPs:FlxTypedGroup<FireUP>;
 	private var blimp:Blimp;
-	//private var blasts:FlxTypedGroup<Blast>;
-	private var ufo:UFO;
 	private var grounds:FlxTypedGroup<Ground>;
 	private var walls:FlxTypedGroup<Ground>;
 	private var roofs:FlxTypedGroup<Ground>;
+	private var blast:Blast;
 
 	private var home:Home;
 	private var lost:Bool;
@@ -64,7 +61,6 @@ class PlayState extends FlxState
 		createUFO();
 		createPowerUPS();
 		initializeGround();
-		//initializeBlasts();
 		add(grounds);
 	}
 
@@ -82,7 +78,7 @@ class PlayState extends FlxState
 	}
 	private function createPowerUPS() {
 		bulkUPs = new FlxTypedGroup<BulkUP>();
-		//fireUPs = new FlxTypedGroup<FireUP>();
+		fireUPs = new FlxTypedGroup<FireUP>();
 
 		for (i in 0...BULKUP_COUNT) {
 			var x:Float = FlxG.random.int(BULKUP_SPAWN_BORDER, 
@@ -92,15 +88,15 @@ class PlayState extends FlxState
 			var bulkUP = new BulkUP(x, y);
 			bulkUPs.add(bulkUP);
 		}
-		//for (i in 0...BULKUP_COUNT) {
-		//	var x:Float = FlxG.random.int(BULKUP_SPAWN_BORDER, 
-		//		FlxG.width - 100);
-		//	var y:Float = FlxG.random.int(-200, 
-		//		FlxG.height - 150);
-		//	var fireUP = new FireUP(x, y);
-		//	fireUPs.add(fireUP);
-		//}
-		//add(fireUPs);
+		for (i in 0...BULKUP_COUNT) {
+			var x:Float = FlxG.random.int(BULKUP_SPAWN_BORDER, 
+				FlxG.width - 100);
+			var y:Float = FlxG.random.int(-200, 
+				FlxG.height - 150);
+			var fireUP = new FireUP(x, y);
+			fireUPs.add(fireUP);
+		}
+		add(fireUPs);
 		add(bulkUPs);
 	}
 
@@ -118,38 +114,6 @@ class PlayState extends FlxState
 		}
 	}
 
-	//private function initializeBlasts(){
-		//blasts = new FlxTypedGroup<Blast>();
-
-	//	for (i in 0...BLAST_COUNT){
-	//		var blast = new Blast();
-	//		blast.kill();
-	//		blasts.add(blast);
-	//	}
-	//}
-
-	//private function blastFactory(){
-	//	return new Blast();
-	//}
-
-	//private function blimpShoot(){
-	//	var blast = blasts.recycle(Blast,blastFactory);
-	//	var blast2 = blasts.recycle(Blast,blastFactory);
-	//	blast.init(blimp.x,blimp.y);
-	//	blast2.init(blimp.x,blimp.y + blimp.height);
-
-    // 	var shoot:Bool = false;
-    // 	shoot = FlxG.mouse.justPressed;
-    //    if (shoot && blimp.isFireUP){
-	///		add(blast);
-	//		add(blast2);
-	//	}
-	//	else if (shoot && !blimp.isFireUP) {
-	//		add(blast);
-	//	}
-	//
-	//}
-
 	private function blimpDeath(blimp:Blimp, ufo:UFO) {
 		if (blimp.isBulkUP){
 			ufo.kill();
@@ -161,10 +125,10 @@ class PlayState extends FlxState
 			lost = true;
 		}
 	}
-	//private function ufoDeath(blast:Blast, ufo:UFO) {
-	//	ufo.kill();
-	//	blast.kill();
-	//}
+	private function ufoDeath(blast:Blast, ufo:UFO) {
+		ufo.kill();
+		blast.kill();
+	}
 	private function bulkUPCollide(blimp:Blimp, bulkUP:BulkUP){
 		bulkUP.kill();
 		blimp.isBulkUP = true;
@@ -182,9 +146,9 @@ class PlayState extends FlxState
 		FlxG.collide(blimp, grounds);
 
 		FlxG.overlap(blimp, ufos, blimpDeath);
-		//FlxG.overlap(blasts, ufos, ufoDeath);
+		FlxG.overlap(blast, ufos, ufoDeath);
 		FlxG.overlap(blimp, bulkUPs, bulkUPCollide);
-		//FlxG.overlap(blimp, fireUPs, fireUPCollide);
+		FlxG.overlap(blimp, fireUPs, fireUPCollide);
 
 
 		FlxG.overlap(blimp, home, winning);
@@ -192,8 +156,6 @@ class PlayState extends FlxState
 		if (lost){
 			FlxG.switchState(new GameOverState());
 		}
-
-		//blimpShoot();
 
 		super.update(elapsed);
 

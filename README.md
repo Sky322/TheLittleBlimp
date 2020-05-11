@@ -17,7 +17,7 @@ The player will use WASD or the arrow keys to move the ship across the screen. Y
 Alien Enemys
 ------------------------
 
-* UFOs that move randomly and try to hit the player
+* UFOs that move and hit the player
 	
 PowerUPs
 ------------------------
@@ -26,12 +26,3 @@ PowerUPs
 - BulkUP: makes player have one extra life
 	
 powerups last 20 seconds
-	
-HUD
-------------------------
-
-- Active PowerUP
-	
-ability to pause the game
-
-I will make some basic graphics using adobe illustrator

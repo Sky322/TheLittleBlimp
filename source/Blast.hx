@@ -9,18 +9,24 @@ class Blast extends FlxSprite{
 
     public function new(x:Float = 0, y:Float = 0){
         super(x,y);
-        makeGraphic(5,5);
+        makeGraphic(7,5);
     }
 
-    function movement(){
+    private function movement(){
         velocity.x = spd;
     }
 
-    function die(){
+    private function die(){
         if (life <= 0){
             this.kill();
         }
         life--;
+    }
+
+    public function init(X:Float,Y:Float){
+        reset(0,0);
+        x=X;
+        y=Y;
     }
 
     override function update(elapsed:Float) {

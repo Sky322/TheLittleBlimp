@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxCamera.FlxCameraFollowStyle;
-import flixel.group.FlxGroup;
 import flixel.FlxG;
 import flixel.FlxState;
 import LittleBlimp;
@@ -29,26 +28,28 @@ class PlayState extends FlxState
 
 	private static var UFO_COUNT(default, never) = 100;
 	private static var UFO_SPAWN_BORDER(default, never) = 6400;
-	private var ufos:FlxTypedGroup<UFO>;
 
+	private static var BLAST_COUNT(default, never) = 1000;
+
+	private var ufos:FlxTypedGroup<UFO>;
 	private var bulkUPs:FlxTypedGroup<BulkUP>;
 	private var fireUPs:FlxTypedGroup<FireUP>;
 	private var blimp:Blimp;
-	private var blast:Blast;
-	private var blast2:Blast;
+	private var blasts:FlxTypedGroup<Blast>;
 	private var ufo:UFO;
 	private var grounds:FlxTypedGroup<Ground>;
 	private var walls:FlxTypedGroup<Ground>;
 	private var roofs:FlxTypedGroup<Ground>;
 
 	private var home:Home;
+	private var lost:Bool;
 
 	override public function create():Void
 	{
 		//only way I found I could get all my collisions to work
 		FlxG.worldBounds.set(0,0,0,0);
 
-		blimp = new Blimp(6250,50);
+		blimp = new Blimp(50,50);
 		add(blimp);
 		home = new Home(6450,50);
 		add(home);
@@ -61,6 +62,7 @@ class PlayState extends FlxState
 		createUFO();
 		createPowerUPS();
 		initializeGround();
+		initializeBlasts();
 		add(grounds);
 	}
 
@@ -115,19 +117,32 @@ class PlayState extends FlxState
 		}
 	}
 
-	private function blimpShoot(){
-		blast = new Blast(blimp.x,blimp.y);
-		blast2 = new Blast(blimp.x, blimp.y+blimp.height);
+	private function initializeBlasts(){
+		blasts = new FlxTypedGroup<Blast>();
 
-        var shoot:Bool = false;
-        shoot = FlxG.mouse.justPressed;
+		for (i in 0...BLAST_COUNT){
+			var blast = new Blast();
+			blast.kill();
+			blasts.add(blast);
+		}
+	}
+
+	private function blimpShoot(){
+		var blast = blasts.recycle();
+		var blast2 = blasts.recycle();
+		blast.init(blimp.x,blimp.y);
+		blast2.init(blimp.x,blimp.y + blimp.height);
+
+     	var shoot:Bool = false;
+     	shoot = FlxG.mouse.justPressed;
         if (shoot && blimp.isFireUP){
-		   add(blast);
-		   add(blast2);
+			add(blast);
+			add(blast2);
 		}
 		else if (shoot && !blimp.isFireUP) {
 			add(blast);
 		}
+	
 	}
 
 	private function blimpDeath(blimp:Blimp, ufo:UFO) {
@@ -138,9 +153,10 @@ class PlayState extends FlxState
 		else{
 			ufo.kill();
 			blimp.kill();
+			lost = true;
 		}
 	}
-	private function ufoDeath(ufo:UFO, blast:Blast) {
+	private function ufoDeath(blast:Blast, ufo:UFO) {
 		ufo.kill();
 		blast.kill();
 	}
@@ -161,11 +177,16 @@ class PlayState extends FlxState
 		FlxG.collide(blimp, grounds);
 
 		FlxG.overlap(blimp, ufos, blimpDeath);
-		FlxG.overlap(ufos ,blast, ufoDeath);
+		FlxG.overlap(blasts, ufos, ufoDeath);
 		FlxG.overlap(blimp, bulkUPs, bulkUPCollide);
 		FlxG.overlap(blimp, fireUPs, fireUPCollide);
 
+
 		FlxG.overlap(blimp, home, winning);
+
+		if (lost){
+			FlxG.switchState(new GameOverState());
+		}
 
 		blimpShoot();
 

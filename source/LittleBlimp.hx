@@ -3,6 +3,7 @@ package;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.util.FlxColor;
+import flixel.system.FlxAssets.FlxGraphicAsset;
 
 class Blimp extends FlxSprite{
 
@@ -13,6 +14,7 @@ class Blimp extends FlxSprite{
     public function new(x:Float = 0, y:Float = 0){
         super(x,y);
         makeGraphic(15,15, FlxColor.BLUE);
+
         drag.x = drag.y = 1200;
     }
     function isFireUpTime(){

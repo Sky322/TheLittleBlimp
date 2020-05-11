@@ -1,11 +1,13 @@
 package;
 
+
 import flixel.FlxG;
 import flixel.ui.FlxButton;
 import flixel.FlxState;
 import flixel.text.FlxText;
 
  class GameWonState extends FlxState{  
+    private var hard:Bool;
     override public function create():Void
     {
         super.create();
@@ -14,6 +16,7 @@ import flixel.text.FlxText;
     }
 
     private function click():Void{
+        hard = false;
         FlxG.switchState(new PlayState());
     }
 }

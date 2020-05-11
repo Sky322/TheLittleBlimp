@@ -1,6 +1,5 @@
 package;
 
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.util.FlxColor;
@@ -12,7 +11,6 @@ class Blimp extends FlxSprite{
     public var isBulkUP:Bool;
     public var isFireUP:Bool;
     private var time = 200;
-    private var blasts:FlxTypedGroup<Blast>;
 
     public function new(x:Float = 0, y:Float = 0){
         super(x,y);
@@ -31,18 +29,17 @@ class Blimp extends FlxSprite{
     }
 
     private function shoot(){
-        var blast = new Blast(this.x, this.y);
-        var blast2 = new Blast(this.x,this.y+height);
         var shoot = FlxG.mouse.justPressed;
+        var blast = new Blast(this.x, this.y);
+        var blast2 = new Blast(this.x, this.y + height);
 
-        if (shoot && isFireUP){
-            blasts.add(blast);
-            blasts.add(blast2);
+        if (shoot && !isFireUP){
+            FlxG.state.add(blast);
         }
-		else if (shoot && !isFireUP) {
-            blasts.add(blast);
+		else if (shoot && isFireUP) {
+            FlxG.state.add(blast);
+            FlxG.state.add(blast2);
         }
-        FlxG.state.add(blasts);
     }
 
     function movement(){

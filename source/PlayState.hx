@@ -15,7 +15,7 @@ class PlayState extends FlxState
 	private static var BULKUP_COUNT(default, never) = 12;
 	private static var BULKUP_SPAWN_BORDER(default, never) = 7200;
 
-	private static var GROUND_COUNT(default, never) = 300;
+	private static var GROUND_COUNT(default, never) = 250;
 	private static var GROUND_START_X(default, never) = 0;
 	private static var GROUND_START_Y(default, never) = 350;
 
@@ -23,7 +23,7 @@ class PlayState extends FlxState
 	private static var WALL_START_X(default, never) = 0;
 	private static var WALL_START_Y(default, never) = 350;
 
-	private static var ROOF_COUNT(default, never) = 300;
+	private static var ROOF_COUNT(default, never) = 250;
 	private static var ROOF_START_X(default, never) = 0;
 	private static var ROOF_START_Y(default, never) = -290;
 

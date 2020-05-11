@@ -5,7 +5,7 @@ Final Project Proposal
 The Little Blimp
 =======================
 
-![the great graphics of my game](TheLittleBlimp.png)
+![the great graphics of my game](TheLittleBlimp.PNG)
 
 https://sky322.github.io/TheLittleBlimp/
 

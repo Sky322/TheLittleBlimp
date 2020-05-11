@@ -5,6 +5,8 @@ Final Project Proposal
 The Little Blimp
 =======================
 
+https://sky322.github.io/TheLittleBlimp/
+
 The little blimp is a sidecrolling flying shooter where you play as a little blimp. You are trying to fly your blimp home when a massive alien invasion comes out of nowhere and you must help defend the Earth from these UFO's.
 
 To win you must make it to the home goal
